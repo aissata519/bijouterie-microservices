@@ -3,7 +3,7 @@
 #
 #   cp .env.example .env      # (facultatif) personnaliser les valeurs
 #   docker compose up --build
-#   -> http://localhost:8080
+#   -> http://localhost:8085
 #
 # Remarquez comment chaque service reçoit sa configuration par des
 # variables d'environnement : c'est exactement ce que vous devrez reproduire
@@ -69,7 +69,7 @@ services:
       BACKEND_URL: http://backend:3000   # = nom du service backend + port
       MAX_UPLOAD_SIZE: ${MAX_UPLOAD_SIZE:-6m}
     ports:
-      - "${FRONTEND_PORT:-8081}:80"
+      - "8085:80"   # changement 
 
 volumes:
   mysql-data:

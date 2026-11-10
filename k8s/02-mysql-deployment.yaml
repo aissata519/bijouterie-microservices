@@ -43,3 +43,10 @@ spec:
           value: "bijoux"
         - name: MYSQL_DATABASE
           value: "bijouterie"
+        volumeMounts: # <--- 1. Étape de montage dans le conteneur
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+      volumes: # <--- 2. Étape de liaison avec le PVC créé à l'étape 1
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc

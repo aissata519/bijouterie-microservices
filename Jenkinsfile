@@ -49,7 +49,7 @@ pipeline {
                     git config user.name "Jenkins CI"
                     git add k8s/*-deployment.yaml
                     git commit -m "chore(gitops): update image tags to %IMAGE_TAG%"
-                    git push https://%GIT_USER%:%GIT_PASS%@://github.com/aissata519/bijouterie-microservices.git HEAD:main
+                    git push origin HEAD:main
                 '''
                 
             }

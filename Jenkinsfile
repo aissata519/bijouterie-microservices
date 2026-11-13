@@ -35,5 +35,24 @@ pipeline {
                 
             }
         }
+        stage('Update manifests') {
+            steps {
+                // 1. Remplace l'ancien tag par le nouveau tag  dans les déploiements(ex v3->v4)
+                powershell """
+                    Get-ChildItem -Path k8s/*-deployment.yaml | ForEach-Object {
+                        (Get-Content \$_.FullName) -replace '(${DOCKER_USER}/bijouterie-[a-z]+:)[a-zA-Z0-9._-]+', '\$1${IMAGE_TAG}' | Set-Content \$_.FullName
+                    }
+                """
+                // 2. Commit et Push automatique vers GitHub
+                bat '''
+                    git config user.email "jenkins@bijouterie.local"
+                    git config user.name "Jenkins CI"
+                    git add k8s/*-deployment.yaml
+                    git commit -m "chore(gitops): update image tags to %IMAGE_TAG%"
+                    git push https://%GIT_USER%:%GIT_PASS%@://github.com/aissata519/bijouterie-microservices.git HEAD:main
+                '''
+                
+            }
+        }
     }
 }

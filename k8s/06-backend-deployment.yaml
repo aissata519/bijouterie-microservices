@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: aissata519/bijouterie-backend:v0
+        image: aissata519/bijouterie-backend:v5
         ports:
         - containerPort: 3000
           name: http
